@@ -48,8 +48,6 @@ class CursoSerializer(serializers.ModelSerializer):
             'avaliacoes_quantidade'
         )
 
-    def get_queryset(self, obj):
-        return obj.avaliacoes.all()[:2]
-
-    def get_avaliacoes_quantidade(self, obj):
+    @staticmethod
+    def get_avaliacoes_quantidade(obj):
         return obj.avaliacoes.all().count()
