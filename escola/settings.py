@@ -8,6 +8,9 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
+
+Token: 1111d49ebefa698abb1b795376827ce97a0f26d7
+Token User: ec072d015df364ae6c667129f80a0c4e21e07ab0
 """
 import os
 from pathlib import Path
@@ -20,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-y$wu#!c1d1n85jz+d^a07lxz#=oplw&mc^t*wl#qmen8!t0!m!'
+SECRET_KEY = 'secret'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,6 +43,7 @@ INSTALLED_APPS = [
 
     'django_filters',
     'rest_framework',
+    'rest_framework.authtoken',
 
     'cursos',
 ]
@@ -134,7 +138,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # DRF
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',

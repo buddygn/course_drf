@@ -4,10 +4,11 @@ from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import mixins
+from rest_framework import permissions
 
 from .models import Avaliacao, Curso
 from .serializers import AvaliacaoSerializer, CursoSerializer
+from .permissions import EhSuperUser, DjangoModelPermissionsWithView
 
 """API V1"""
 
@@ -51,8 +52,23 @@ class AvaliacaoAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 class CursoViewSet(viewsets.ModelViewSet):
     """API para listagem Cursos"""
+    permission_classes = (
+        DjangoModelPermissionsWithView,
+        EhSuperUser,
+        permissions.DjangoModelPermissions,
+    )
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
+
+    perms_map = {
+        'GET': ['%(app_label)s.view_%(model_name)s'],
+        'OPTIONS': [],
+        'HEAD': [],
+        'POST': ['%(app_label)s.add_%(model_name)s'],
+        'PUT': ['%(app_label)s.change_%(model_name)s'],
+        'PATCH': ['%(app_label)s.change_%(model_name)s'],
+        'DELETE': ['%(app_label)s.delete_%(model_name)s'],
+    }
 
     @action(detail=True, methods=['get'])
     def avaliacoes(self, request, pk=None):
