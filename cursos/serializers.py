@@ -18,6 +18,7 @@ class AvaliacaoSerializer(serializers.ModelSerializer):
             'avaliacao',
             'criacao',
             'ativo',
+            'nome'
         )
 
     def validate_avaliacao(self, valor):
